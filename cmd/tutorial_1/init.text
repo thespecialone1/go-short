@@ -1,0 +1,88 @@
+
+package main
+
+import ("fmt"
+        "unicode/utf8"
+)
+
+  
+  // simple := only import the package that you wanna use i.e. fmt
+func main(){
+  fmt.Println("hello world")
+
+  // constants and variables
+  
+  // To declare a variable use 'var' keyword then 'name of the variable' and then the 'type'
+  // if you define the variable then have to use it (part of go-simplicity -- design philosophy - should be easy to read and understand. Point of that we dont have any pointles variables hanging around) 
+  
+  var varInt int16 =12   //also have int8/16/32/64 depends on the memory or bits you wanna use 
+  var intNum uint16    //same bitsizes ints but only store positive integer - caan store a twice as large amount of bits in same memory
+    fmt.Println(varInt)
+    fmt.Println(intNum)
+
+  var floatNum float32 // also have float32/64 - dont have the 'float' type (have to define 32 or 64)
+  var float32Num float32 = 123456.9567 //output:= 123456.95
+  var float64Num float64 = 123456.9567 //output:= 123456.9567
+    fmt.Println(floatNum)
+    fmt.Println(float32Num)
+    fmt.Println(float64Num)
+  
+  //Arthmetic Operations - can't perform with mix types
+  //string type - use 'string' to store as string --- ""(double quotes a single line output)- ``(backticks output same as input).
+  var myString string = "hello" + "world"
+  fmt.Println(myString)
+  fmt.Println(len("test"))   //output:= 4 (not the char in the string) "len" func gives the number of bytes - 10110111 = 1byte   
+  
+  // charecters outside the vanilla ASCII(e.g. ""γ") charecters set are store with more than '1byte' 
+  // forexample: 
+  fmt.Println(len("A")) // output:= 1 
+  fmt.Println(len("γ")) // output:= 2
+  //want the length of the string and the number of charecters in them import built-in package "unicode/utf" -- and use runecountinstring function
+  fmt.Println(utf8.RuneCountInString("γ"))  //output:= 1, --Runes are also another datatype in go and represent charecters  
+  
+  //---RUNE-- If you use a single quote like this: -its a rune || more on runes later (will find out how strings, utf8 encodings in Go relate to runes & bytetype)
+  var myRune rune = 'a'
+  fmt.Println(myRune)  //output:= 97 -- runes are weird man
+  
+  //---BOOLOEAN-- True or False
+  var myBoolean bool = false
+  fmt.Println(myBoolean)  // output:= false
+
+  //---Default value for unsigned ints, ints, float, runes = 0 | for strings = '' | for bool = false
+
+  //Another way to write -- more effective
+  // create a variable but omit the type
+  var myVar = "text"    // this way type is inffered
+  myVaar := "text"      // drop the 'var' keyword and use ':='
+  fmt.Println(myVar)
+  fmt.Println(myVaar)
+  
+  var1, var2, var3 := 1, 2, 3
+  fmt.Println(var1 , var2 , var3)     //output:= 1 2 3
+  
+  // -----QUESTION??-------
+  // When to use/define datatype: (write type eplicitly whenever you can and when its not obvious): lets say we have:
+  // up line 55: it was easy to initialize myVaar with short hand is fine cuz its obv that its a string type var
+  // suppose we have: 
+  // func foo()      // its importe from somewhere and return a value -- if we use shorthand then we dont know what myVaar is unless you hove over it - Not Convinient
+  // var myVaar string = foo()  // good practice
+  //  fmt.Println(myVaar)
+  
+
+  //---CONSTANTS----- constants are alternative to variables -- everything wrote before applies to constants too - except you cant change them
+  const myConst string = "const_value"
+// myConst := "another_value"        // cannot assign myConst again when its created 
+//  You can't just declare constants (e.g 'const myConst string' -- FALSE) -- You have to initialize it also explicitly (e.g. 'const myConst string = "const_value' -- TRUE)
+  fmt.Println(myConst)
+
+  //constants are useful when you dont want the  code down the line to change the value you set 
+  //forexample:
+  const pi float32 = 3.1415     // there's really isn;t any reason for anyone to change it and doing so will mess up the calculations we maybe making - So const is a good choice here  
+  fmt.Println(pi)
+  
+  
+}
+
+// constants and variables
+
+
