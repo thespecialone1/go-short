@@ -23,3 +23,7 @@ go.work.sum
 
 # env file
 .env
+
+#some files
+init.text
+./cmd/tutorial_1/init.text
