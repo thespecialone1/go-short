@@ -22,4 +22,4 @@ This project is a simple introduction to the Go programming language. It demonst
 3. Run the code using:
    ```bash
    go run main.go
-
+  ```
