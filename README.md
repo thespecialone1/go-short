@@ -1,7 +1,7 @@
 
 # Go Tutorials
 
-This repository contains a series of Go tutorials to help me learn the language step-by-step.
+Its a series of short Go tutorials to help me learn the language step-by-step.
 
 ## Tutorial 1: Basics
 - **Location:** `cmd/tutorial_1/main.go`
@@ -11,6 +11,7 @@ This repository contains a series of Go tutorials to help me learn the language 
 ```bash
 go run cmd/tutorial_1/main.go
 ```
+
 
 ## Tutorial 2: Functions & Control Structures
 - **Location:** `cmd/tutorial_2/main.go`
