@@ -1,0 +1,95 @@
+package mai
+
+import (
+	"errors"
+	"fmt"
+)
+
+// ---Functions & Control Structures
+//
+//	keyword: 'func' then followed by the name of the function 'main(parameters will go here) {logic of the function} -- Starting curly braces must on the first line along ()'
+func main() {
+	// 1d. we can't put int here because the datatype here is enforced meaning it is defined already below check remark 1a.
+	var printValue string = "hello world" // 1b. we can define a variable in our main function and pass it into the printMe function
+	printMe(printValue)                   // 1c. and it will print this to the terminal
+	var numerator int = 11
+	//var denominator int = 2
+	var denominator int = 0
+	//2b. what if someone passes a 0 -> we get intiger divide by zero error (its a design pattern in go that if a function encounter an errors to have a return type of typeerrorr along with the values you're returning)
+	//--error
+	//2c. error is another built-in type in go and if we initilize a variable of type error in our function like this: >look for 2d.
+
+	var result, remainder, err int = intDivision(numerator, denominator) // in main func we can insert another variable. ref to:2a.
+	// job of the caller to check if an error was returned ref to 2d.
+	// 2f.  Now we check if its not nil meaning and error wasnt encountered in this case we'll just print the error message   by calling the error method like this:
+	if err != nil {
+		fmt.Printf(err.Error()) //error method
+		// how to check if 2 things are not equal using the exclaimation equal sign (1!=2  true) = true or  double equal sign == (1==2 false)
+		//note: handling errors in this way is a general design pattern in go -- if you import funcs from other packages alot of the time they will return an error type in addition to other outputs
+		// what we did here : we actually check if something went wrong and handle it accordingly
+		//adding some more control Structure here using else if
+	} else if remainder == 0 { // in else if statement we will only check its condition if the previous 'if' or 'else if' statement is false otherwise it gets skipped -- so lets print a different message (depending on whether there's a remainder at the end)
+		fmt.Printf("The result of integiner division is %v", result)
+	} else { // else statement which is default if all the statements above are false -- In go else if and else statements have to on the same line as of the last bracket
+
+		fmt.Printf("The result of integer division is %v with remainder %v", result, remainder) //%v is for value; 1st v= result, 2nd = remainder
+		// with printf statement we can easily format the string using variables
+	}
+
+	//Switch Statements:
+	//setup a switch block using the 'switch' keyword, within the curly braces -- exactlt same as if else statement
+	switch {
+	case err != nil:
+		fmt.Printf(err.Error())
+	case remainder == 0:
+		fmt.Printf("The result of the integer division is %v", result)
+	default:
+		fmt.Printf("The result of the integiner division is %v with remainder  %v ", result, remainder)
+	}
+	// Conditional Switch statements
+	// suppose we want to print out a differentvalues to the console  depending on the value of the remainder
+	// if we write a switch statement but this time we insert the remainder variable between the switch keyword and the opening curly braces we have a conditional switch statement . Now we can check if the remainder is equal to zero like:
+	switch remainder {
+	case 0:
+		fmt.Printf("The division was exact")
+		// if its 1 or 2
+	case 1, 2:
+		fmt.Printf("The division was close ")
+		// and anything else will evaluate to the default statement
+	default:
+		fmt.Printf("The division was not close")
+	}
+
+}
+
+// Multiple logic checks with the same conditional statement e.g.
+//    if 1==1 && 2==2{
+//fmt.Println("passed the checks")
+//}
+//This is an if statement where use ampercent (&&) signs to indicate that both these checks have these (==) check have to be true in order to print // statement
+//If the operator has two bars "||" like this it will check the or here in this example only one check needs to be true inorder to execute the print statement. Go only execute the check it needs to ignore the rest forexample here (1==1 && 2==2{skipped 2==2}) since the 1st check evaluates to true
+//because there is no need to evaluate that-- in and case  since this evaluates the false  - it will not  perform the other check
+
+// instead of assuming what you wanna print, the printMe() takes a parameter of type "string" and print that instead.
+func printMe(printValue string) { //1a. we can define an input value like this 'printValue string' printValue here is the name of the parameter and type string
+	fmt.Println(printValue)
+}
+
+// Integer Division
+// a function that does Integer division for me and returns a value
+// take 2 Integers numirator and denominator
+func intDivision(numerator int, denominator int) (int, int, error) { //2a. want multiple values to return you can specify multiple types in parenthses () i.e. remainder
+	var err error // 2d. here the default value is nil -- nil is adefault value for bunch of different types | remember how 0 was a default value for ints
+	//2e. we can check the denominator is not a 0 value by using if statement
+	// if sstatement:
+	if denominator == 0 { //'if' keyword followed by the condition and then the code that we wanna execute --> it goes inside '{}'like in func
+		err = errors.New("cannot be divided by zero") // logic: so if our deniminator is zero we wanna return our err variable cuz its an invalid input and we notified the caller that something went wrong -- have to improt errors package to create and error type. we used error.New() method it creates an error type that we can initilize with the error message
+		return 0, 0, err                              // here we are returning 2 Integers - we can set those to zero - since we also returning the err variable we have to add the error typr to our return defination at the top of the function for the check. line 2a. so if the denominator is not 0 the program will contineu and retun the result remainder and the error which is nil (check 4 lines below added err)
+	}
+	var result int = numerator / denominator
+	var remainder int = numerator % denominator
+	return result, remainder, err //seprate the resturn values by comma
+	// if you have function that returns value to the caller you have to identify the type that its returning after ()
+	// then return that variable after that define our result variable in our main function
+
+}
