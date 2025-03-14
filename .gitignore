@@ -26,4 +26,5 @@ go.work.sum
 
 #some files
 init.text
-./cmd/tutorial_1/init.text
+/cmd/tutorial_1/init.text
+/cmd/tutorial_2/init.text
