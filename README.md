@@ -31,3 +31,13 @@ go run cmd/tutorial_2/main.go
 ```bash
 go run cmd/tutorial_3/main.go
 ```
+
+
+## Tutorial 3: Strings, Runes & Bytes
+- **Location:** `cmd/tutorial_4/main.go`
+- **Overview:** Explores **Strings**, **Runes**, and **Bytes** in Go.  
+
+### Run Tutorial 4
+```bash
+go run cmd/tutorial_4/main.go
+```
