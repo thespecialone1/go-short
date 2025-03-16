@@ -1,4 +1,4 @@
-```markdown
+
 # Go Tutorials
 
 Its a series of short Go tutorials to help me learn the language step-by-step.
