@@ -1,0 +1,193 @@
+package main
+
+import (
+	"fmt"
+	"time"
+)
+
+// Arrays, Slices, Maps and Loops
+// First: []Arrays
+// - Fixed Length Collection of Data
+// - Same Type
+//   - which in indexable or in
+//   - Contiguous Memory Location [very close, no  gaps, like 1st element is at memory address x(x -> int(4bytes)) then next would be at x+4 and then the next
+//     at x+8...
+//
+// Why Contiguous?
+// Faster Access for the CPU to any index using pointer arthmetic
+// Efficient Iteration - Processor can cache it efficiently
+// No Overhead like Slices -  Arrays dont store extra metadata like Length and Capacity. [lenght is lenght and Capacity is the elements that can be stored in the Array]
+// -------------
+// when declaring and array the default value are set to be the default values of the elements types
+// - like for int32 it will be 0.[3]--- default value: [0,0,0]
+func main() {
+	var intArr [3]int32 // [3] indicates this holdes exact 3 elements - Length cannot be changed after it initilized | Same Type: all the elements in array are int32
+	fmt.Println(intArr[0])
+	fmt.Println(intArr[1:3]) // output: [0 0]
+	// change the value of any indexing as well
+	intArr[1] = 123
+	fmt.Println(intArr[0:3]) //output: [0 123 0]
+
+	// Since our array is of int32 = 4bytes of memory and our array stores three elements of int32 which means [3]int32 = 12bytes of Contiguous memory allocated
+	// We can print out the memory Location of each element using '&'
+	fmt.Println("Memory Locations:")
+	fmt.Println(&intArr[0]) // output: 0x14000104020
+	fmt.Println(&intArr[1]) // output: 0x14000104024
+	fmt.Println(&intArr[2]) // output: 0x14000104028 e.g if we increase the size of the array then next address would be 0x1400010402c
+	//As you can see the memory locations ar exactly 4bytes apartso compiler doesn't need to store every location it just needs to know where the first byte is and can just
+	// increment by 4 to get the location of the next
+
+	//-----------------------------------------------------------
+	// we can immedialty initilize the array using this syntax
+
+	fmt.Println("Another way to initilize the Arrays")
+	var scndArr [4]int32 = [4]int32{1, 2, 3, 4}
+	fmt.Println(scndArr)
+	// or using the :=
+	fmt.Println("Initilize Array using :=")
+	thrdArr := [5]int32{1, 2, 3, 4, 5}
+	fmt.Println(thrdArr)
+	// Another way to initilize is instead of [lenght value] like [6] instead you can use [...] and mention you numbers
+	fmt.Println("Another way to initilize using [...]")
+	frthArr := [...]int32{1, 2, 3, 4, 5, 6}
+	fmt.Println(frthArr)
+	// ----------------------------------------------------------
+	fmt.Println("Slices")
+	//Slices:
+	//According to go documentation slices are just wrapers arroud arrays. So under the hood slices are just arrays with some additional functionality.
+	// Example:
+	var intSlice []int32 = []int32{4, 5, 6} // by omiting the lenght value[anynumber] now we have slices []
+	fmt.Println(intSlice)
+	// Unlike arrays i can add values to the slice using the buil-in append function.
+	intSlice = append(intSlice, 7) // append the value to the end of the slice[intSlice]
+	fmt.Println(intSlice)          // returns the slice with new element appended
+	// Another way to append slices
+	fmt.Println("Another way to initilize array using :=")
+	intSlice2 := []int32{1, 2, 3} // initilized
+	fmt.Println("initilized:", intSlice2)
+	// Now append using new method
+	fmt.Println("Another way of appending a slice lets say appending intSlice2 into intSlice using spread operator like this: intSlice2...")
+	intSlice = append(intSlice, intSlice2...)
+	fmt.Println(intSlice)
+	fmt.Printf("\n")
+	//What actually is happening when we append?
+	fmt.Println("What actually is happening when we append to the underlying array?")
+	// initially array is allocated that it can hold exactly 3 values "[4,5,6]". When we go and append another number a check is done to see if underlying array has enough
+	// room for 4 values. In this case it does not [4,5,6]. So a new ARRAY is created [*,*,*,7,*,*] with enough 'CAPACITY' and the values are copied there [4,5,6,7,*,*]
+	// So we got a totally new array back meaning it will be stored ina different memory location. We can test that by printing the lenth of the array before and after
+	// appending
+	var appendSlice []int32 = []int32{1, 2, 3}
+	fmt.Printf("The length is %v with Capacity %v \n", len(appendSlice), cap(appendSlice)) // 'cap' is a built-in function (capacity of the slice)
+	fmt.Println("Appending 4 into appendSlice: appendSlice = append(appendSlice, 4)")      // output: The length is 3 with Capacity 3
+	appendSlice = append(appendSlice, 4)
+	fmt.Printf("\n")
+	fmt.Println("Now The length and capacity after appending")
+	fmt.Printf("The length is %v with Capacity %v", len(appendSlice), cap(appendSlice)) // output: The length is 4 with Capacity 6
+	fmt.Printf("\n")
+
+	// Another way to make slice is using 'make' function and can specify the length of the slice
+	fmt.Println("Another way to make slices using make fucntion")
+	var intSlice3 []int32 = make([]int32, 3)
+	fmt.Println("initilize a slice using make function: ", intSlice3)
+
+	// Another way to create a using make is:
+	// we can define the the length and then as well as the capacity of teh slice
+	var intSlice4 []int32 = make([]int32, 4, 5) // here 4 is the lenght and 5 is the capacity[*,*,*,*,*]
+	fmt.Println(intSlice4, "slice with another make function it lenght and capacity is defined")
+	// defining the capacity earlier is good if you have idea of how many values. you gonna need in future. This helps the code run faster and not put too
+	// much pressure on the program to reallocate the underlying array when it needs to store more values. Which can have a pretty lagre impact on peformance
+	// We will do a speed test at the end
+
+	// ----------------------------------------
+	// Maps:
+	//      Very usuful data structure implimented in most programming languages including go. So map is a set of key value pait {"key": "value"}, we can
+	//      lookup its value by its key.
+	// We can create a map using make function again
+	var myMap map[string]uint8 = make(map[string]uint8) // thia means keys are of type strings and values are of type uint8
+	fmt.Println(myMap)
+
+	var myMap2 = map[string]uint8{"Adam": 23, "Sarah": 24, "jadon": 26}
+	// can get the age of adam like this:
+	fmt.Println(myMap2["Sarah"])
+	// Note that if try to access the value of a map using a key that doesn't exist then it gonna return the default value of that type
+	// So we have to be careful in go because a map will always retuen something even if the key doesnt exist
+	fmt.Println(myMap2["Jason"]) //output: 0;  here we have uint8 which have a default value of zero
+
+	// Maps in go return an optional 2nd value which is a boolera
+	var age, ok = myMap2["Adam"] // this will retun true if lets say use Jason it will provide false otherwise.
+	// This way you can handle the two cases by checking the value of the return boolean variable
+	// like this:
+	if ok {
+		fmt.Printf("The age is %v ", age)
+	} else {
+		fmt.Println("Invalid Name")
+	}
+	// To delete a value from the map go has a default built-in delte function
+	delete(myMap, "Adam") // 1st argumanet is a map and the 2nd argumanet is the key. This delete by a refence so no return value is given
+	// -------------------------------------------------------
+	// We can iitterate through maps: For that lets talk about loops in go
+	// Loops:
+	// -------------------------------------------------------
+	//      If you wanna iterate ove something be at a map or array or slice we can use the range keyword within our for loop like this:
+	for name := range myMap2 {
+		fmt.Printf("Name: %v\n", name) // So the name variable is initilized within the for statement itself using the ":=" syntax.
+		// output: Name: Sarah
+		//         Name: Adam  - No Order is preserved while iterating. Adam can come first. There's no order while iterating. We run this loop mulitiple time i'll
+		//                       get a different ordering of the keys.
+	}
+	// If we wanna also retuen the values, we can do that like this:
+	for name, age := range myMap2 {
+		fmt.Printf("Name: %v, Age: %v \n", name, age)
+	}
+	// Similarly we can iterate over arrays and slices like this: where i is the index and v is the value in array or slice
+
+	for i, v := range intArr {
+		fmt.Printf("Index: %v , Value: %v \n", i, v)
+	}
+	// Go does not have while loops persay but it can be achived with "for" keyword again.
+	// This could be your while loop in go. It can continue until i is greater than or equal to 10
+	var i, p int = 2, 0
+	for p < 10 {
+		fmt.Println(p)
+		p = i + p
+	}
+	// we can totally omit the condition as well and instead use a 'break' keyword here which will end the loop again when i is greater than or equal to 10
+	// for {
+	// 	if i >= 100 {
+	// 		break
+	// 	}
+	// 	fmt.Println(i)
+	// 	i = i + 1
+	// }
+	// Finally the same thing can be achieved with this syntax
+	// There are three distinct parts here seprated by smicolons called "the initilization;" "the condition;" and "the post;"
+	// i is initilized here with 0 value and this where the loop starts and it will continue as long as this statement (i<10;) is true, i.e i < 10. The post is
+	// what gets executed every time the loop is completed in this case i++ means increment i + 1
+	// for i=0; i<10; i++ {
+	//   fmt.Println(i)
+	// }
+  speetTest()
+}
+
+// -----------------------------------------------------------------------------
+// SPEED TEST: LETS DO A SPEED TEST SHOWING THE BENEFITS OF SETTONG THE CAPACITY OF YOUR SLICE AHEAD OF TIME.
+// -----------------------------------------------------------------------------
+func speetTest() {
+	var n int = 10000               // we gonna append 1 million elements to our test Slices
+	var testSlice = []int{}            // first test slice is gonna be empty with 0 capacity
+	var testSlice2 = make([]int, 0, n) // second one is also gonna be empty both (1st and 2nd) with preallocated capacity of 1000000. move to timeLoop func
+
+	fmt.Printf("Total time without preallocation: %v \n", timeLoop(testSlice, n))
+	fmt.Printf("Total time with preallocation: %v \n", timeLoop(testSlice2, n))
+
+}
+
+// so i have this timeLoop function whhich takes a slice and number of Iteration. It uses go's built-in time package to measure how long it takes to finish the 
+// loop then return the result
+func timeLoop(slice []int, n int) time.Duration {    // takes a slice and number of Iteration
+	var t0 = time.Now()         // using go's built-in time package to calculate the for loop 
+	for len(slice) < n {
+		slice = append(slice, 1)
+	}
+	return time.Since(t0)         // then return the result
+}
