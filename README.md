@@ -33,7 +33,7 @@ go run cmd/tutorial_3/main.go
 ```
 
 
-## Tutorial 3: Strings, Runes & Bytes
+## Tutorial 4: Strings, Runes & Bytes
 - **Location:** `cmd/tutorial_4/main.go`
 - **Overview:** Explores **Strings**, **Runes**, and **Bytes** in Go.  
 

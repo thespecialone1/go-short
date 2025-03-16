@@ -2,7 +2,7 @@
 
 How Go represents and manipulates strings. The interplay between strings, their underlying byte arrays, and runes (Unicode code points).
 
-## What You'll Learn
+## 📜 Discussed
 
 - **String Representation:**  
   Understanding that Go strings are stored as an array of bytes (UTF-8 encoded).  
