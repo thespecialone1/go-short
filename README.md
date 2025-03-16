@@ -23,11 +23,11 @@ go run cmd/tutorial_2/main.go
 ```
 
 
-# Tutorial 3: Arrays, Slices, Maps & Loops
+## Tutorial 3: Arrays, Slices, Maps & Loops
 - **Location:** `cmd/tutorial_2/main.go`
 - **Overview:** Explores **arrays**, **slices**, **maps**, and **loops** in Go.  
 
-### Run Tutorial 2
+### Run Tutorial 3
 ```bash
 go run cmd/tutorial_3/main.go
 ```
