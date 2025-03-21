@@ -55,7 +55,7 @@ go run cmd/5.Structs_Interface/main.go
 - **Location:** `cmd/6.Pointers/main.go`
 - **Overview:** Explores **Pointers**  in Go.  
 
-### Run Tutorial 4
+### Run Tutorial 6
 ```bash
 go run cmd/6.Pointers/main.go
 ```
