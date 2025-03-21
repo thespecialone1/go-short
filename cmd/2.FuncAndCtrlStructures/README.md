@@ -42,5 +42,5 @@ The main file (`main.go`) does the following:
 
 From the repository root, run:
 ```bash
-go run cmd/tutorial_2/main.go
+go run cmd/2.FuncAndCtrlStructures/main.go
 ```

@@ -17,9 +17,6 @@ This project is a simple introduction to the Go programming language. It demonst
 
 ## Running the Code
 
-1. Ensure you have [Go installed](https://golang.org/dl/).
-2. Clone or download the repository.
-3. Run the code using:
    ```bash
-   go run main.go
+   go run cmd/1.Basics/main.go
   ```

@@ -19,9 +19,5 @@ How Go represents and manipulates strings. The interplay between strings, their 
 
 ## How to Run
 
-1. **Clone or copy** this code into your project.
-2. **Navigate** to the directory containing `main.go`.
-3. **Run the program:**
-
    ```bash
-   go run main.go
+   go run cmd/4.Strings_Bytes_Runes/main.go
